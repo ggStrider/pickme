@@ -15,6 +15,7 @@ namespace Player
         private PlayerCameraRotate _playerCameraRotate;
         
         private DialogueManager _dialogueManager;
+        private PeeControl _peeControl;
 
         public void Initialize(DialogueManager dialogueManager)
         {
@@ -22,6 +23,7 @@ namespace Player
             
             _playerSystem = GetComponent<PlayerSystem>();
             _playerCameraRotate = GetComponent<PlayerCameraRotate>();
+            _peeControl = FindObjectOfType<PeeControl>();
             
             _playerMap = new PlayerMap();
 
@@ -36,12 +38,22 @@ namespace Player
             _playerMap.Main.Look.performed += OnLook;
             _playerMap.Main.Look.canceled += OnLook;
             
+            // _playerMap.Main.Look.started += OnControlPee;
+            // _playerMap.Main.Look.canceled += OnControlPee;
+            
             _playerMap.Main.LMB.started += OnLeftMousePressed;
             
             _playerMap.Enable();
             
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        private void OnControlPee(InputAction.CallbackContext context)
+        {
+            const float sensitivity = 0.01f;
+            var y = context.ReadValue<Vector2>().x * sensitivity;
+            _peeControl.SetDirection(y);
         }
 
         private void OnInteract(InputAction.CallbackContext context)
