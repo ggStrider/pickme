@@ -10,7 +10,7 @@ namespace Data
         [SerializeField] private PlayerData _data;
         public PlayerData Data => _data;
 
-        private List<IAddedItem> _addedItemObservers;
+        private List<IAddedItem> _addedItemObservers = new List<IAddedItem>();
 
         public static GameSession Instance { get; private set; }
         
