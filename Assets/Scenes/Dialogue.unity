@@ -1843,6 +1843,7 @@ GameObject:
   - component: {fileID: 1585255527}
   - component: {fileID: 1585255526}
   - component: {fileID: 1585255528}
+  - component: {fileID: 1585255529}
   m_Layer: 0
   m_Name: Hovered
   m_TagString: Untagged
@@ -1979,6 +1980,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hoveredCrosshair: {fileID: 11400000, guid: fa2ff1b228edf4c4582b4e8c1fd9ae94, type: 2}
+--- !u!114 &1585255529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585255521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a6944dcdb68b644a664eb903266ab5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemToAdd: {fileID: 11400000, guid: 10111377906d2484aa9ae69b5cfb98e4, type: 2}
+--- !u!1 &1629089149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1629089151}
+  - component: {fileID: 1629089150}
+  m_Layer: 0
+  m_Name: '###GameSession'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1629089150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629089149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 663d75850ba34e728b4e60a37c959614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    Items: []
+--- !u!4 &1629089151
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629089149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1629827224
 GameObject:
   m_ObjectHideFlags: 0
@@ -2229,10 +2289,11 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 591907693}
   - {fileID: 1239378983}
-  - {fileID: 535153097}
   - {fileID: 48805034}
   - {fileID: 44845343}
   - {fileID: 840910611}
   - {fileID: 832955469}
   - {fileID: 1585255525}
   - {fileID: 805046752}
+  - {fileID: 535153097}
+  - {fileID: 1629089151}
