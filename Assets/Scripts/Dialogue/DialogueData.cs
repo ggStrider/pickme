@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Dialogue
 {
-    [CreateAssetMenu(fileName = "Dialogue", menuName = "Dialogue")]
+    [CreateAssetMenu(fileName = "Dialogue", menuName = "Thenexy/Dialogue")]
     public class DialogueData : ScriptableObject
     {
         [TextArea(2, 3)]
