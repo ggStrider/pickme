@@ -3,7 +3,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Hovered
+namespace Hover
 {
     public class HoveredCheckRay : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Hovered
+namespace Hover
 {
     [RequireComponent(typeof(Outline))]
     public class HoveredOutline : MonoBehaviour, IHovered

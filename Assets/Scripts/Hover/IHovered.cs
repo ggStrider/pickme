@@ -1,4 +1,4 @@
-﻿namespace Hovered
+﻿namespace Hover
 {
     public interface IHovered
     {
