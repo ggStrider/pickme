@@ -1,6 +1,7 @@
 using UnityEngine;
 using GetObjects;
 using Hover;
+using Interact;
 
 namespace Player
 {
@@ -164,8 +165,7 @@ namespace Player
             var objectInRay = GetObjectByRay.Get(_playerCamera.position,
                 _playerCamera.forward, _interactionDistance);
             
-            if(objectInRay == null) return;
-            Debug.Log(objectInRay.name);
+            objectInRay?.GetComponent<IInteract>()?.Interact();
         }
     }
 }

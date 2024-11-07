@@ -41,7 +41,7 @@ namespace Player
             _playerMap.Enable();
             
             Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void OnInteract(InputAction.CallbackContext context)
