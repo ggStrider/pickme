@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 using Data.Items;
@@ -12,9 +13,9 @@ namespace Interact
 
         private void Start()
         {
-            _gameSession = FindObjectOfType<GameSession>();
+            _gameSession = GameSession.Instance;
         }
-        
+
         public void Interact()
         {
             _gameSession.AddItemToInventory(_itemToAdd);
