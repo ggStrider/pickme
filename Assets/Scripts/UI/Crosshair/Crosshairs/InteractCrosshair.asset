@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2add529cabae43019b753fd005a1d76d, type: 3}
   m_Name: InteractCrosshair
   m_EditorClassIdentifier: 
-  Crosshair: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Crosshair: {fileID: 21300000, guid: 0e640fbe87928cc40aaae19bb087552a, type: 3}
+  CrosshairColor: {r: 1, g: 1, b: 1, a: 1}
   CrosshairSize: {x: 0.3, y: 0.3}

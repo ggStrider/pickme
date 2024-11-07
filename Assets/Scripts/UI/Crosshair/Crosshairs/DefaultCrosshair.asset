@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: DefaultCrosshair
   m_EditorClassIdentifier: 
   Crosshair: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  CrosshairSize: {x: 0.3, y: 0.3}
+  CrosshairColor: {r: 1, g: 1, b: 1, a: 1}
+  CrosshairSize: {x: 0.07, y: 0.07}
