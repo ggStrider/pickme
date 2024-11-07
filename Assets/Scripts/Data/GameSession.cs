@@ -20,5 +20,10 @@ namespace Data
         {
             return _data.Items.Contains(item);
         }
+
+        public void AddItemToInventory(Item item)
+        {
+            _data.Items.Add(item);
+        }
     }
 }
