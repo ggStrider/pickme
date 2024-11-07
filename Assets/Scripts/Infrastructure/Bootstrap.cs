@@ -5,14 +5,17 @@ using Dialogue;
 using Hover;
 using Player;
 using UI.Crosshair;
+using Audio;
 
 namespace Infrastructure
 {
     [RequireComponent(typeof(DialogueManager))]
     [RequireComponent(typeof(CrosshairManager))]
+    [RequireComponent(typeof(AudioManager))]
     public class Bootstrap : MonoBehaviour
     {
         [SerializeField] private Image _crosshairImage;
+        [SerializeField] private AudioSource _audioManagerPlayOneShotSource;
         
         private void Awake()
         {
@@ -32,6 +35,12 @@ namespace Infrastructure
 
             var hoveredCrosshair = FindObjectsOfType<HoveredChangeCrosshair>();
             InitializeCrosshairHovered(crosshairManager, hoveredCrosshair);
+        }
+
+        private void Start()
+        {
+            var audioManager = GetComponent<AudioManager>();
+            audioManager.Initialize(_audioManagerPlayOneShotSource);
         }
 
         private static void InitializeDialogues(DialogueStart[] dialogues, DialogueManager dialogueManager)
