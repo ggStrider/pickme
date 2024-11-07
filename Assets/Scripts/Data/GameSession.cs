@@ -1,4 +1,6 @@
-﻿using Data.Items;
+﻿using System.Collections.Generic;
+using Data.Items;
+using Data.Observers;
 using UnityEngine;
 
 namespace Data
@@ -7,6 +9,8 @@ namespace Data
     {
         [SerializeField] private PlayerData _data;
         public PlayerData Data => _data;
+
+        private List<IAddedItem> _addedItemObservers;
 
         public static GameSession Instance { get; private set; }
         
@@ -24,6 +28,28 @@ namespace Data
         public void AddItemToInventory(Item item)
         {
             _data.Items.Add(item);
+            
+            NotifyItemAdded();
         }
+
+        #region Observer stuff
+
+        public void SubscribeItemAdded(IAddedItem observer)
+        {
+            if(_addedItemObservers.Contains(observer)) return;
+            _addedItemObservers.Add(observer);
+        }
+
+        public void NotifyItemAdded()
+        {
+            if(_addedItemObservers.Count == 0) return;
+            
+            foreach (var observer in _addedItemObservers)
+            {
+                observer.OnItemAdded();
+            }
+        }
+
+        #endregion
     }
 }
