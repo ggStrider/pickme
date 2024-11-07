@@ -24,8 +24,6 @@ namespace Hover
         {
             if (_hoveredObjects is not null)
             {
-                Debug.Log("sigma");
-
                 foreach (var hovered in _hoveredObjects)
                 {
                     hovered.UnHovered();
@@ -41,7 +39,6 @@ namespace Hover
 
                 foreach (var hovered in _hoveredObjects)
                 {
-                    Debug.Log("sssssigma");
                     hovered.Hovered();
                 }
             }

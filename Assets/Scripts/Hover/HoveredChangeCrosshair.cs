@@ -10,7 +10,6 @@ namespace Hover
 
         public void Initialize(CrosshairManager manager)
         {
-            Debug.Log(manager);
             _crosshairManager = manager;
         }
 

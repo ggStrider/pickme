@@ -46,7 +46,6 @@ namespace Infrastructure
         {
             foreach (var changer in changers)
             {
-                Debug.Log(changer.gameObject.name);
                 changer.Initialize(manager);
             }
         }
