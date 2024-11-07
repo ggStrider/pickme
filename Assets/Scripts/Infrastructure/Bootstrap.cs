@@ -17,6 +17,9 @@ namespace Infrastructure
 
             var playerInput = FindObjectOfType<InputReader>();
             playerInput.Initialize(dialogueManager);
+
+            var playerSystem = FindObjectOfType<PlayerSystem>();
+            playerSystem.Initialize();
         }
 
         private static void InitializeDialogues(DialogueStart[] dialogues, DialogueManager dialogueManager)
