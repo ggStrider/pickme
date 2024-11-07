@@ -40,7 +40,7 @@ namespace Data
             _addedItemObservers.Add(observer);
         }
 
-        public void NotifyItemAdded()
+        private void NotifyItemAdded()
         {
             if(_addedItemObservers.Count == 0) return;
             
