@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b4e41c0eb2840668a69b8023d1d8806, type: 3}
   m_Name: DialogueCameraFocusHandler
   m_EditorClassIdentifier: 
-  TimeToRotate: 0
-  TimeToFocus: 0
-  NewFov: 0
+  TimeToRotate: 0.6
+  TimeToFocus: 1
+  NewFov: 40

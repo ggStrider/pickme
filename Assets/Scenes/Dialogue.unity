@@ -364,6 +364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogue: {fileID: 11400000, guid: a4d24835db85b6044b8296a5e497e0b7, type: 2}
+  _target: {fileID: 0}
 --- !u!4 &48805034
 Transform:
   m_ObjectHideFlags: 0
@@ -392,6 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogue: {fileID: 11400000, guid: 12638e060a52d154d8219170d8fcb16b, type: 2}
+  _target: {fileID: 0}
 --- !u!1 &142925989
 GameObject:
   m_ObjectHideFlags: 0
@@ -6323,10 +6325,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c962b87d096e4e3d86b8b15333438e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 832955469}
-  _timeToRotate: 0.4
-  _newFov: 40
-  _setFovTime: 0.53
+  _timeToResetFov: 0
+  _settings: {fileID: 0}
 --- !u!1 &1239378980
 GameObject:
   m_ObjectHideFlags: 0
@@ -12126,6 +12126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogue: {fileID: 11400000, guid: a4d24835db85b6044b8296a5e497e0b7, type: 2}
+  _target: {fileID: 832955469}
 --- !u!114 &1905781709
 MonoBehaviour:
   m_ObjectHideFlags: 0
