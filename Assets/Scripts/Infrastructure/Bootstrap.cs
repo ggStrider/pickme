@@ -6,6 +6,7 @@ using Hover;
 using Player;
 using UI.Crosshair;
 using Audio;
+using Handlers;
 
 namespace Infrastructure
 {
@@ -20,21 +21,27 @@ namespace Infrastructure
         private void Awake()
         {
             var dialogueManager = GetComponent<DialogueManager>();
-            var dialogues = FindObjectsOfType<DialogueStart>();
-
-            InitializeDialogues(dialogues, dialogueManager);
 
             var playerInput = FindObjectOfType<InputReader>();
             playerInput.Initialize(dialogueManager);
 
             var playerSystem = FindObjectOfType<PlayerSystem>();
-            playerSystem.Initialize();
+            playerSystem.Initialize(dialogueManager);
             
             var crosshairManager = GetComponent<CrosshairManager>();
             crosshairManager.Initialize(_crosshairImage);
 
             var hoveredCrosshair = FindObjectsOfType<HoveredChangeCrosshair>();
             InitializeCrosshairHovered(crosshairManager, hoveredCrosshair);
+            
+            var playerCameraRotate = FindObjectOfType<PlayerCameraRotate>();
+            playerCameraRotate.Initialize(dialogueManager);
+            
+            var cameraFocusHandler = playerSystem.gameObject.GetComponent<CameraFocusHandler>();
+            cameraFocusHandler.Initialize(dialogueManager);
+            
+            var dialogues = FindObjectsOfType<DialogueStart>();
+            InitializeDialogues(dialogues, dialogueManager, cameraFocusHandler);
         }
 
         private void Start()
@@ -43,11 +50,12 @@ namespace Infrastructure
             audioManager.Initialize(_audioManagerPlayOneShotSource);
         }
 
-        private static void InitializeDialogues(DialogueStart[] dialogues, DialogueManager dialogueManager)
+        private static void InitializeDialogues(DialogueStart[] dialogues, DialogueManager dialogueManager,
+            CameraFocusHandler playerCameraHandler)
         {
             foreach (var dialogue in dialogues)
             {
-                dialogue.Initialize(dialogueManager);
+                dialogue.Initialize(dialogueManager, playerCameraHandler);
             }
         }
 

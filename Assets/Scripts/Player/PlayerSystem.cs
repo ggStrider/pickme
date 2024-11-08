@@ -1,5 +1,10 @@
+using Cinemachine;
 using UnityEngine;
+
+using Dialogue;
+using Dialogue.Observers;
 using GetObjects;
+using Handlers;
 using Hover;
 using Interact;
 
@@ -7,11 +12,13 @@ namespace Player
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(HoveredCheckRay))]
-    public class PlayerSystem : MonoBehaviour
+    [RequireComponent(typeof(CameraFocusHandler))]
+    public class PlayerSystem : MonoBehaviour, IDialogueStarted, IDialogueEnded
     {
         [SerializeField] private float _maxSpeed = 10f;
         [SerializeField] private float _addSpeedDelta = 1f;
         [SerializeField] private float _currentSpeed;
+        [SerializeField] private bool _canMove = true;
         private float _defaultMaxSpeed;
 
         [Space, Header("Sprint")]
@@ -41,7 +48,7 @@ namespace Player
         public delegate void SprintAction(bool isSprinting);
         public event SprintAction OnSprintToggled;
         
-        public void Initialize()
+        public void Initialize(DialogueManager dialogueManager)
         {
             _characterController = GetComponent<CharacterController>();
 
@@ -54,6 +61,12 @@ namespace Player
             }
             
             GetComponent<HoveredCheckRay>().SetSettings(_playerCamera, _interactionDistance);
+            
+            dialogueManager.SubscribeDialogueStarted(this);
+            dialogueManager.SubscribeDialogueEnded(this);
+
+            var virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
+            GetComponent<CameraFocusHandler>().GetCamera(virtualCamera);
         }
         
         /// <summary>
@@ -71,7 +84,7 @@ namespace Player
 
         private void FixedUpdate()
         {
-            Move();
+            if(_canMove) Move();
             UpdateStamina();
         }
 
@@ -99,6 +112,7 @@ namespace Player
 
         public bool IsPlayerMoving()
         {
+            if (!_canMove) return false;
             return _direction != Vector2.zero;
         }
 
@@ -166,6 +180,22 @@ namespace Player
                 _playerCamera.forward, _interactionDistance);
             
             objectInRay?.GetComponent<IInteract>()?.Interact();
+        }
+
+        public void OnDialogueStarted(bool canControl)
+        {
+            _canMove = canControl;
+            
+            // i should think bout that
+            _canSprint = canControl;
+        }
+
+        public void OnAllDialoguesEnded()
+        {
+            _canMove = true;
+            
+            // i should think bout that
+            _canSprint = true;
         }
     }
 }

@@ -9,5 +9,8 @@ namespace Dialogue
         public string[] Lines;
 
         public float CharDelay = 0.05f;
+
+        [Space]
+        public bool CanPlayerUseControls;
     }
 }

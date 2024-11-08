@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 
+using Dialogue;
+using Dialogue.Observers;
+
 namespace Player
 {
-    public class PlayerCameraRotate : MonoBehaviour
+    public class PlayerCameraRotate : MonoBehaviour, IDialogueStarted, IDialogueEnded
     {
         [SerializeField] private Transform _camera;
+        [SerializeField] private bool _canRotate = true;
         
         [Space]
         [SerializeField] private float _sensitivity = 0.3f;
@@ -30,12 +34,19 @@ namespace Player
             _camera = Camera.main.transform;
         }
 
+        public void Initialize(DialogueManager dialogueManager)
+        {
+            dialogueManager.SubscribeDialogueStarted(this);
+            dialogueManager.SubscribeDialogueEnded(this);
+        }
+
         /// <summary>
         /// Method to rotate player and camera
         /// </summary>
         /// <param name="lookRotation">rotate vector</param>
         public void SetLookRotation(Vector2 lookRotation)
         {
+            if (!_canRotate) return;
             var finalRotationVector = lookRotation * _sensitivity;
             
             var xRotateDelta = finalRotationVector.x;
@@ -45,6 +56,16 @@ namespace Player
             _rotationX = Mathf.Clamp(_rotationX, _verticalMinAngle, _verticalMaxAngle);
 
             _camera.localRotation = Quaternion.Euler(_rotationX, 0, 0);
+        }
+
+        public void OnDialogueStarted(bool canControl)
+        {
+            _canRotate = canControl;
+        }
+
+        public void OnAllDialoguesEnded()
+        {
+            _canRotate = true;
         }
     }
 }

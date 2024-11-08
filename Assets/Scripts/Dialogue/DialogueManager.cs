@@ -4,6 +4,7 @@ using TMPro;
 
 using System.Collections;
 using System.Collections.Generic;
+using Dialogue.Observers;
 
 namespace Dialogue
 {
@@ -12,13 +13,17 @@ namespace Dialogue
         [SerializeField] private TextMeshProUGUI _dialogueText;
         
         private readonly Queue<DialogueData> _dialoguesData = new Queue<DialogueData>();
-
+        
+        private readonly List<IDialogueStarted> _dialogueStartedObservers = new List<IDialogueStarted>();
+        private readonly List<IDialogueEnded> _dialogueEndedObservers = new List<IDialogueEnded>();
+        
         private bool _busy;
         private int _lineIndex;
         
         public void GetDialogueData(DialogueData dialogueData)
         {
             _dialoguesData.Enqueue(dialogueData);
+            NotifyDialogueStarted();
             
             if(_busy) return;
             _busy = true;
@@ -44,18 +49,21 @@ namespace Dialogue
             
             var data = _dialoguesData.Peek();
             
+            // For skipping animation
             if (_dialogueText.text != data.Lines[_lineIndex])
             {
                 StopAllCoroutines();
                 _dialogueText.text = data.Lines[_lineIndex];
             }
             
+            // For next line
             else if (data.Lines.Length - 1 > _lineIndex)
             {
                 _lineIndex++;
                 StartCoroutine(AnimateLine());
             }
 
+            // For next data
             else
             {
                 _dialoguesData.Dequeue();
@@ -65,12 +73,51 @@ namespace Dialogue
                 {
                     _busy = false;
                     _dialogueText.text = string.Empty;
+
+                    NotifyDialoguesEnded();
                 }
                 else
                 {
                     StartCoroutine(AnimateLine());
+                    NotifyDialogueStarted();
                 }
             }
         }
+
+        #region Observers
+
+        public void SubscribeDialogueStarted(IDialogueStarted observer)
+        {
+            if (_dialogueStartedObservers.Contains(observer)) return;
+            _dialogueStartedObservers.Add(observer);
+        }
+
+        private void NotifyDialogueStarted()
+        {
+            if(_dialogueStartedObservers.Count == 0) return;
+            
+            foreach (var observer in _dialogueStartedObservers)
+            {
+                observer.OnDialogueStarted(_dialoguesData.Peek().CanPlayerUseControls);
+            }
+        }
+
+        public void SubscribeDialogueEnded(IDialogueEnded observer)
+        {
+            if (_dialogueEndedObservers.Contains(observer)) return;
+            _dialogueEndedObservers.Add(observer);
+        }
+
+        private void NotifyDialoguesEnded()
+        {
+            if (_dialogueEndedObservers.Count == 0) return;
+            
+            foreach (var observer in _dialogueEndedObservers)
+            {
+                observer.OnAllDialoguesEnded();
+            }
+        }
+        
+        #endregion
     }
 }
