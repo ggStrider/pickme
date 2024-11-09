@@ -11,7 +11,6 @@ namespace Handlers
 {
     public class CameraFocusHandler : MonoBehaviour, IDialogueEnded
     {
-        [SerializeField] private float _timeToResetFov;
         [SerializeField] private CameraFocusHandlerSettings _settings;
 
         private Transform _camera;
@@ -36,12 +35,12 @@ namespace Handlers
         {
             _camera.DOLookAt(target.position, _settings.TimeToRotate);
 
-            Focus();
+            Focus(_settings.NewFov);
         }
 
-        public void Focus()
+        public void Focus(float newFov)
         {
-            DOVirtual.Float(_vCamera.m_Lens.FieldOfView, _settings.NewFov, _settings.TimeToFocus, value => 
+            DOVirtual.Float(_vCamera.m_Lens.FieldOfView, newFov, _settings.TimeToFocus, value => 
             {
                 _vCamera.m_Lens.FieldOfView = value;
             }).SetEase(Ease.InOutQuad);
@@ -49,7 +48,7 @@ namespace Handlers
 
         public void ResetFov()
         {
-            Focus();
+            Focus(_defaultFOV);
         }
 
         public void OnAllDialoguesEnded()

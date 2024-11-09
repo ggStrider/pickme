@@ -6325,8 +6325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c962b87d096e4e3d86b8b15333438e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeToResetFov: 0
-  _settings: {fileID: 0}
+  _settings: {fileID: 11400000, guid: bdb5e2d6fe378074fa3a7e3fee3fbd02, type: 2}
 --- !u!1 &1239378980
 GameObject:
   m_ObjectHideFlags: 0
