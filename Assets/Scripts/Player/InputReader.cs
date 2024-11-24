@@ -33,7 +33,8 @@ namespace Player
             _playerMap.Main.Sprint.started += OnSprint;
             _playerMap.Main.Sprint.canceled += OnSprint;
 
-            _playerMap.Main.Interact.started += OnInteract;
+            _playerMap.Main.Interact.performed += OnInteract;
+            _playerMap.Main.Interact.canceled += OnInteract;
             
             _playerMap.Main.Look.performed += OnLook;
             _playerMap.Main.Look.canceled += OnLook;
@@ -58,7 +59,7 @@ namespace Player
 
         private void OnInteract(InputAction.CallbackContext context)
         {
-            _playerSystem.Interact();
+            _playerSystem.Interact(context.ReadValue<float>() > 0);
         }
 
         private void OnLeftMousePressed(InputAction.CallbackContext context)
