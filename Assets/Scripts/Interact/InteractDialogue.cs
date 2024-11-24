@@ -14,8 +14,10 @@ namespace Interact
             _dialogue = GetComponent<DialogueStart>();
         }
 
-        public void Interact()
+        public void Interact(bool isPressing)
         {
+            if (!isPressing) return;
+
             _dialogue.OnStartDialogue();
         }
     }

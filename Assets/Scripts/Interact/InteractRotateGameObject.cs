@@ -18,8 +18,10 @@ namespace Interact
             _firstRotation = _endRotate;
         }
 
-        public void Interact()
+        public void Interact(bool isPressing)
         {
+            if (!isPressing) return;
+            
             _target.DORotate(_endRotate, 1f);
             _endRotate += _firstRotation;
         }

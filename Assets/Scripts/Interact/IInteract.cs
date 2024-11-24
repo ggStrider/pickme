@@ -2,6 +2,6 @@
 {
     public interface IInteract
     {
-        public void Interact();
+        public void Interact(bool isPressing);
     }
 }

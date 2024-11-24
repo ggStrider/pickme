@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 using Data.Items;
@@ -16,8 +15,10 @@ namespace Interact
             _gameSession = GameSession.Instance;
         }
 
-        public void Interact()
+        public void Interact(bool isPressing)
         {
+            if (!isPressing) return;
+            
             _gameSession.AddItemToInventory(_itemToAdd);
             gameObject.SetActive(false);
         }
