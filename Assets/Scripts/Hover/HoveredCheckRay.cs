@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Collections.Generic;
+using Data;
 
 namespace Hover
 {
@@ -12,7 +13,7 @@ namespace Hover
 
         private RaycastHit _hitInfo;
 
-        private List<IHovered> _hoveredObjects;
+        private HashSet<IHovered> _hoveredObjects = new HashSet<IHovered>();
 
         public void SetSettings(Transform outPoint, float distance)
         {
@@ -22,25 +23,47 @@ namespace Hover
         
         private void Update()
         {
-            if (_hoveredObjects is not null)
+            if (Physics.Raycast(_outPoint.position, _outPoint.forward, out _hitInfo, _distance, ~DefaultData.TriggerLayer))
             {
-                foreach (var hovered in _hoveredObjects)
+                Debug.Log(_hitInfo.collider.gameObject.name);
+                if (_hitInfo.collider.TryGetComponent(out IHovered hovered))
                 {
-                    hovered.UnHovered();
+                    var newHovered = _hitInfo.collider?.GetComponents<IHovered>().ToHashSet();
+                    if (!_hoveredObjects.SetEquals(newHovered))
+                    {
+                        ClearHovered(ref _hoveredObjects);
+                        
+                        _hoveredObjects = newHovered;
+                        InvokeAllHovered(_hoveredObjects);
+                    }
                 }
-                _hoveredObjects = null;
+                else
+                {
+                    ClearHovered(ref _hoveredObjects);
+                }
             }
-
-            if (Physics.Raycast(_outPoint.position, _outPoint.forward, out _hitInfo, _distance))
+            // Raycast == null
+            else
             {
-                _hoveredObjects = _hitInfo.collider?.GetComponents<IHovered>().ToList();
+                ClearHovered(ref _hoveredObjects);
+            }
+        }
 
-                if (_hoveredObjects == null) return;
+        private static void ClearHovered(ref HashSet<IHovered> hoveredObjects)
+        {
+            if(hoveredObjects.Count == 0) return;
+            foreach (var hovered in hoveredObjects)
+            {
+                hovered.UnHovered();
+            }
+            hoveredObjects.Clear();
+        }
 
-                foreach (var hovered in _hoveredObjects)
-                {
-                    hovered.Hovered();
-                }
+        private void InvokeAllHovered(HashSet<IHovered> hoveredObjects)
+        {
+            foreach (var hovered in hoveredObjects)
+            {
+                hovered.Hovered();
             }
         }
     }
