@@ -1,4 +1,5 @@
 using Cinemachine;
+using Data;
 using UnityEngine;
 
 using Dialogue;
@@ -174,12 +175,12 @@ namespace Player
             }
         }
         
-        public void Interact()
+        public void Interact(bool isPressing)
         {
             var objectInRay = GetObjectByRay.Get(_playerCamera.position,
-                _playerCamera.forward, _interactionDistance);
+                _playerCamera.forward, _interactionDistance, DefaultData.TriggerLayer);
             
-            objectInRay?.GetComponent<IInteract>()?.Interact();
+            objectInRay?.GetComponent<IInteract>()?.Interact(isPressing);
         }
 
         public void OnDialogueStarted(bool canControl)
