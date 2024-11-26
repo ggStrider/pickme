@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _crosshairImage: {fileID: 0}
   _audioManagerPlayOneShotSource: {fileID: 6382330534205772780}
+  _playerItemPlace: {fileID: 0}
 --- !u!114 &972095392894167903
 MonoBehaviour:
   m_ObjectHideFlags: 0

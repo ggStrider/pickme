@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8979513181350470828}
   - component: {fileID: 8736942375102855440}
   - component: {fileID: 5945114556579603592}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4857,7 +4857,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 998856868468858655}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cameras
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4891,7 +4891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6980970290122601358}
   - component: {fileID: 8535000140995402197}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4934,7 +4934,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5273451641630453850}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: PhysicItemPlace
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -4965,7 +4965,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4806296771125020460}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4998,7 +4998,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7177988986552444431}
   - component: {fileID: 7729138481465894664}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5071,7 +5071,7 @@ GameObject:
   - component: {fileID: 5769776616811440621}
   - component: {fileID: 2729005817384328643}
   - component: {fileID: 4436185412249223358}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SubEmitter0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9960,7 +9960,7 @@ GameObject:
   - component: {fileID: 3859391701118439899}
   - component: {fileID: 4487003704293084780}
   - component: {fileID: 4828538922221253795}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10024,7 +10024,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 895
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -10090,7 +10090,7 @@ GameObject:
   - component: {fileID: 3413747652815320762}
   - component: {fileID: 9060305212119003519}
   - component: {fileID: 1422562089215726789}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: testItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10202,7 +10202,7 @@ GameObject:
   - component: {fileID: 2611142868659449716}
   - component: {fileID: 1727939135587489012}
   - component: {fileID: 7199422217238227290}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10433,7 +10433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6164832687394641310}
   - component: {fileID: 4568427992927230032}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ItemCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
