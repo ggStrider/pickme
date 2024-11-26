@@ -183,7 +183,7 @@ namespace Player
             var objectInRay = GetObjectByRay.Get(_playerCamera.position,
                 _playerCamera.forward, _interactionDistance, DefaultData.TriggerLayer);
 
-            var interact = GetComponent<IInteract>();
+            var interact = objectInRay.GetComponent<IInteract>();
             if(interact is null or TakeableGameObject) return;
 
             interact.Interact(isPressing);
