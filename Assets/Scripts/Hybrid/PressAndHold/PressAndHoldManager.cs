@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Hybrid.PressAndHold
 {
-    public class PressAndHoldEvent : MonoBehaviour, IInteract, IHovered
+    public class PressAndHoldManager : MonoBehaviour, IInteract, IHovered
     {
         [SerializeField] private Slider _progressSlider;
         [SerializeField] private bool _resetProgressOnFail;

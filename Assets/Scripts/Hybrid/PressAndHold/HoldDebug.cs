@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
-using Hybrid.PressAndHold;
 
-namespace Hybrid
+namespace Hybrid.PressAndHold
 {
-    [RequireComponent(typeof(PressAndHoldEvent))]
+    [RequireComponent(typeof(PressAndHoldManager))]
     public class HoldDebug : MonoBehaviour, IPressAndHold
     {
         private void Start()
         {
-            GetComponent<PressAndHoldEvent>().SubscribeObserver(this);
+            GetComponent<PressAndHoldManager>().SubscribeObserver(this);
         }
         
         public void Completed()
