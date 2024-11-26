@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 209226630}
   - component: {fileID: 209226629}
   - component: {fileID: 209226628}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TriggerCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,6 +710,7 @@ GameObject:
   - component: {fileID: 461347719}
   - component: {fileID: 461347724}
   - component: {fileID: 461347723}
+  - component: {fileID: 461347726}
   - component: {fileID: 461347725}
   m_Layer: 0
   m_Name: Obstacle<n> (6)
@@ -833,10 +834,48 @@ MonoBehaviour:
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
+  precomputeOutline: 1
+  bakeKeys:
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  bakeValues:
+  - data:
+    - {x: 0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: 0.57735026, y: -0.57735026, z: 0.57735026}
 --- !u!114 &461347725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461347717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa014502cb842ba8f98ed4be6ad964f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &461347726
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -848,13 +887,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f5703e67c3ed64aa4f55e04e858e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pressed: 0
-  _isHovered: 0
-  _slider: {fileID: 831596261}
-  _onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  _progress: 0
+  _progressSlider: {fileID: 831596261}
+  _resetProgressOnFail: 0
+  _addDeltaToProgress: 0.001
 --- !u!1 &608061787
 GameObject:
   m_ObjectHideFlags: 0
