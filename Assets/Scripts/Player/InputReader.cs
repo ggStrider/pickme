@@ -44,6 +44,9 @@ namespace Player
             
             _playerMap.Main.LMB.started += OnLeftMousePressed;
             
+            _playerMap.Main.LMB.started += OnInteractWithProp;
+            _playerMap.Main.LMB.canceled += OnInteractWithProp;
+            
             _playerMap.Enable();
             
             Cursor.visible = false;
@@ -59,7 +62,12 @@ namespace Player
 
         private void OnInteract(InputAction.CallbackContext context)
         {
-            _playerSystem.Interact(context.ReadValue<float>() > 0);
+            _playerSystem.Interact(context.performed);
+        }
+
+        private void OnInteractWithProp(InputAction.CallbackContext context)
+        {
+            _playerSystem.InteractWithProp(context.started);
         }
 
         private void OnLeftMousePressed(InputAction.CallbackContext context)

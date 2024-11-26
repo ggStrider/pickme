@@ -7,6 +7,7 @@ using Player;
 using UI.Crosshair;
 using Audio;
 using Handlers;
+using Hybrid.TakeObject;
 
 namespace Infrastructure
 {
@@ -17,6 +18,7 @@ namespace Infrastructure
     {
         [SerializeField] private Image _crosshairImage;
         [SerializeField] private AudioSource _audioManagerPlayOneShotSource;
+        [SerializeField] private Transform _playerItemPlace;
         
         private void Awake()
         {
@@ -42,12 +44,23 @@ namespace Infrastructure
             
             var dialogues = FindObjectsOfType<DialogueStart>();
             InitializeDialogues(dialogues, dialogueManager, cameraFocusHandler);
+
+            var takeableObjects = FindObjectsOfType<TakeableGameObject>();
+            InitializeTakeableObjects(takeableObjects);
         }
 
         private void Start()
         {
             var audioManager = GetComponent<AudioManager>();
             audioManager.Initialize(_audioManagerPlayOneShotSource);
+        }
+
+        private void InitializeTakeableObjects(TakeableGameObject[] takeableObjects)
+        {
+            foreach (var takeableObject in takeableObjects)
+            {
+                takeableObject.Initialize(_playerItemPlace);
+            }
         }
 
         private static void InitializeDialogues(DialogueStart[] dialogues, DialogueManager dialogueManager,

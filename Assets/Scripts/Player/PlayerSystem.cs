@@ -7,6 +7,7 @@ using Dialogue.Observers;
 using GetObjects;
 using Handlers;
 using Hover;
+using Hybrid.TakeObject;
 using Interact;
 
 namespace Player
@@ -43,6 +44,8 @@ namespace Player
         [SerializeField] private Transform _playerCamera;
 
         private CharacterController _characterController;
+
+        private TakeableGameObject _currentInHand;
         
         private Vector2 _direction;
 
@@ -179,8 +182,31 @@ namespace Player
         {
             var objectInRay = GetObjectByRay.Get(_playerCamera.position,
                 _playerCamera.forward, _interactionDistance, DefaultData.TriggerLayer);
+
+            var interact = GetComponent<IInteract>();
+            if(interact is null or TakeableGameObject) return;
+
+            interact.Interact(isPressing);
+        }
+
+        public void InteractWithProp(bool isPressing)
+        {
+            if (_currentInHand != null && !isPressing)
+            {
+                _currentInHand.Interact(false);
+
+                _currentInHand = null;
+                return;
+            }
             
-            objectInRay?.GetComponent<IInteract>()?.Interact(isPressing);
+            var prop = GetObjectByRay.Get(_playerCamera.position,
+                _playerCamera.forward, _interactionDistance, DefaultData.TriggerLayer)?
+                .GetComponent<TakeableGameObject>();
+            
+            if(prop is null) return;
+            
+            _currentInHand = prop;
+            prop.Interact(isPressing);
         }
 
         public void OnDialogueStarted(bool canControl)
