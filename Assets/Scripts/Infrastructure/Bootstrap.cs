@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AnimationControllers;
+using UnityEngine;
 using UnityEngine.UI;
 
 using Dialogue;
@@ -36,23 +37,23 @@ namespace Infrastructure
             var hoveredCrosshair = FindObjectsOfType<HoveredChangeCrosshair>();
             InitializeCrosshairHovered(crosshairManager, hoveredCrosshair);
             
-            var playerCameraRotate = FindObjectOfType<PlayerCameraRotate>();
-            playerCameraRotate.Initialize(dialogueManager);
-            
-            var cameraFocusHandler = playerSystem.gameObject.GetComponent<CameraFocusHandler>();
+            var cameraFocusHandler = playerSystem.gameObject.GetComponent<PlayerCameraFocusHandler>();
             cameraFocusHandler.Initialize(dialogueManager);
+            
+            var playerCameraRotate = FindObjectOfType<PlayerCameraRotate>();
+            playerCameraRotate.Initialize(dialogueManager, cameraFocusHandler);
             
             var dialogues = FindObjectsOfType<DialogueStart>();
             InitializeDialogues(dialogues, dialogueManager, cameraFocusHandler);
 
             var takeableObjects = FindObjectsOfType<TakeableGameObject>();
             InitializeTakeableObjects(takeableObjects);
-        }
-
-        private void Start()
-        {
+            
             var audioManager = GetComponent<AudioManager>();
             audioManager.Initialize(_audioManagerPlayOneShotSource);
+
+            var dialogueAnimationToggler = FindObjectOfType<DialogueAnimationToggler>();
+            dialogueAnimationToggler.Initialize(dialogueManager);
         }
 
         private void InitializeTakeableObjects(TakeableGameObject[] takeableObjects)
@@ -64,11 +65,11 @@ namespace Infrastructure
         }
 
         private static void InitializeDialogues(DialogueStart[] dialogues, DialogueManager dialogueManager,
-            CameraFocusHandler playerCameraHandler)
+            PlayerCameraFocusHandler playerPlayerCameraHandler)
         {
             foreach (var dialogue in dialogues)
             {
-                dialogue.Initialize(dialogueManager, playerCameraHandler);
+                dialogue.Initialize(dialogueManager, playerPlayerCameraHandler);
             }
         }
 

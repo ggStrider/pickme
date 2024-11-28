@@ -2,10 +2,12 @@
 
 using Dialogue;
 using Dialogue.Observers;
+using Handlers;
+using Handlers.Observer;
 
 namespace Player
 {
-    public class PlayerCameraRotate : MonoBehaviour, IDialogueStarted, IDialogueEnded
+    public class PlayerCameraRotate : MonoBehaviour, IDialogueStarted, IDialogueEnded, IFocused
     {
         [SerializeField] private Transform _camera;
         [SerializeField] private bool _canRotate = true;
@@ -18,6 +20,7 @@ namespace Player
         [SerializeField] private float _verticalMaxAngle = 80f;
         
         private float _rotationX;
+        private float _rotationY;
 
         private void Start()
         {
@@ -34,10 +37,12 @@ namespace Player
             _camera = Camera.main.transform;
         }
 
-        public void Initialize(DialogueManager dialogueManager)
+        public void Initialize(DialogueManager dialogueManager, PlayerCameraFocusHandler focusHandler)
         {
             dialogueManager.SubscribeDialogueStarted(this);
             dialogueManager.SubscribeDialogueEnded(this);
+            
+            focusHandler.Subscribe(this);
         }
 
         /// <summary>
@@ -49,13 +54,11 @@ namespace Player
             if (!_canRotate) return;
             var finalRotationVector = lookRotation * _sensitivity;
             
-            var xRotateDelta = finalRotationVector.x;
-            transform.Rotate(Vector3.up * xRotateDelta);
-
             _rotationX -= finalRotationVector.y;
             _rotationX = Mathf.Clamp(_rotationX, _verticalMinAngle, _verticalMaxAngle);
 
-            _camera.localRotation = Quaternion.Euler(_rotationX, 0, 0);
+            _rotationY += finalRotationVector.x;
+            _camera.localRotation = Quaternion.Euler(_rotationX, _rotationY, 0);
         }
 
         public void OnDialogueStarted(bool canControl)
@@ -66,6 +69,12 @@ namespace Player
         public void OnAllDialoguesEnded()
         {
             _canRotate = true;
+        }
+
+        public void OnCameraFocused(Vector3 newRotation)
+        {
+            _rotationX = newRotation.x;
+            _rotationY = newRotation.y;
         }
     }
 }

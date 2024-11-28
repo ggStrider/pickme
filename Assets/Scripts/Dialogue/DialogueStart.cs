@@ -11,13 +11,13 @@ namespace Dialogue
         [Header("If null - no focusing")]
         [SerializeField] private Transform _target;
 
-        private CameraFocusHandler _playerFocusHandler;
+        private PlayerCameraFocusHandler _playerFocusHandler;
         private DialogueManager _dialogueManager;
 
-        public void Initialize(DialogueManager dialogueManager, CameraFocusHandler playerCameraFocusHandler)
+        public void Initialize(DialogueManager dialogueManager, PlayerCameraFocusHandler playerPlayerCameraFocusHandler)
         {
             _dialogueManager = dialogueManager;
-            _playerFocusHandler = playerCameraFocusHandler;
+            _playerFocusHandler = playerPlayerCameraFocusHandler;
         }
 
         [ContextMenu("Start dialogue")]

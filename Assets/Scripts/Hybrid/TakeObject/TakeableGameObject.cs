@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Hybrid.TakeObject
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class TakeableGameObject : MonoBehaviour, IInteract
+    public class TakeableGameObject : MonoBehaviour, IInteractProp
     {
         [SerializeField] private float _smoothPosition = 3;
         [SerializeField] private float _smoothRotation = 1;

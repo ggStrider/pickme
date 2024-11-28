@@ -14,7 +14,7 @@ namespace Player
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(HoveredCheckRay))]
-    [RequireComponent(typeof(CameraFocusHandler))]
+    [RequireComponent(typeof(PlayerCameraFocusHandler))]
     public class PlayerSystem : MonoBehaviour, IDialogueStarted, IDialogueEnded
     {
         [SerializeField] private float _maxSpeed = 10f;
@@ -45,7 +45,7 @@ namespace Player
 
         private CharacterController _characterController;
 
-        private TakeableGameObject _currentInHand;
+        private IInteractProp _currentInHand;
         
         private Vector2 _direction;
 
@@ -70,7 +70,7 @@ namespace Player
             dialogueManager.SubscribeDialogueEnded(this);
 
             var virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
-            GetComponent<CameraFocusHandler>().GetCamera(virtualCamera);
+            GetComponent<PlayerCameraFocusHandler>().GetCamera(virtualCamera);
         }
         
         /// <summary>
@@ -183,10 +183,7 @@ namespace Player
             var objectInRay = GetObjectByRay.Get(_playerCamera.position,
                 _playerCamera.forward, _interactionDistance, DefaultData.TriggerLayer);
 
-            var interact = objectInRay.GetComponent<IInteract>();
-            if(interact is null or TakeableGameObject) return;
-
-            interact.Interact(isPressing);
+            objectInRay?.GetComponent<IInteract>()?.Interact(isPressing);
         }
 
         public void InteractWithProp(bool isPressing)
@@ -201,7 +198,7 @@ namespace Player
             
             var prop = GetObjectByRay.Get(_playerCamera.position,
                 _playerCamera.forward, _interactionDistance, DefaultData.TriggerLayer)?
-                .GetComponent<TakeableGameObject>();
+                .GetComponent<IInteractProp>();
             
             if(prop is null) return;
             
