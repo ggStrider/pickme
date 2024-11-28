@@ -49,11 +49,14 @@ namespace Infrastructure
             var takeableObjects = FindObjectsOfType<TakeableGameObject>();
             InitializeTakeableObjects(takeableObjects);
             
-            var audioManager = GetComponent<AudioManager>();
-            audioManager.Initialize(_audioManagerPlayOneShotSource);
-
             var dialogueAnimationToggler = FindObjectOfType<DialogueAnimationToggler>();
             dialogueAnimationToggler.Initialize(dialogueManager);
+        }
+
+        private void Start()
+        {
+            var audioManager = GetComponent<AudioManager>();
+            audioManager.Initialize(_audioManagerPlayOneShotSource);
         }
 
         private void InitializeTakeableObjects(TakeableGameObject[] takeableObjects)
