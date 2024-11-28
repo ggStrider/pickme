@@ -25,7 +25,7 @@ namespace Hover
         {
             if (Physics.Raycast(_outPoint.position, _outPoint.forward, out _hitInfo, _distance, ~DefaultData.TriggerLayer))
             {
-                if (_hitInfo.collider.TryGetComponent(out IHovered hovered))
+                if (_hitInfo.collider.TryGetComponent(out IHovered _))
                 {
                     var newHovered = _hitInfo.collider?.GetComponents<IHovered>().ToHashSet();
                     if (!_hoveredObjects.SetEquals(newHovered))
