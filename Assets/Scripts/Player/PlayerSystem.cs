@@ -25,7 +25,6 @@ namespace Player
         [SerializeField] private float _addSpeedDelta = 1f;
         [SerializeField] private float _currentSpeed;
         [SerializeField] private bool _canMove = true;
-        private float _defaultMaxSpeed;
 
         [Space]
         [SerializeField] private float _interactionDistance = 3f;
@@ -46,8 +45,6 @@ namespace Player
         {
             _characterController = GetComponent<CharacterController>();
 
-            _defaultMaxSpeed = _maxSpeed;
-            
             GetComponent<HoveredCheckRay>().SetSettings(_playerCamera, _interactionDistance);
             
             dialogueManager.SubscribeDialogueStarted(this);
