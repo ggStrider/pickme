@@ -58,7 +58,7 @@ namespace Player
             _rotationX = Mathf.Clamp(_rotationX, _verticalMinAngle, _verticalMaxAngle);
 
             _rotationY += finalRotationVector.x;
-            _camera.localRotation = Quaternion.Euler(_rotationX, _rotationY, 0);
+            _camera.localRotation = Quaternion.Euler(_rotationX, _rotationY, _camera.localRotation.z);
         }
 
         public void OnDialogueStarted(bool canControl)

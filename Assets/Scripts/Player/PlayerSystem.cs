@@ -1,13 +1,15 @@
 using Cinemachine;
-using Data;
 using UnityEngine;
+
+using Data;
 
 using Dialogue;
 using Dialogue.Observers;
+
 using GetObjects;
 using Handlers;
+
 using Hover;
-using Hybrid.TakeObject;
 using Interact;
 
 namespace Player
@@ -15,6 +17,7 @@ namespace Player
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(HoveredCheckRay))]
     [RequireComponent(typeof(PlayerCameraFocusHandler))]
+    [RequireComponent(typeof(CameraTilt))]
     public class PlayerSystem : MonoBehaviour, IDialogueStarted, IDialogueEnded
     {
         [SerializeField] private float _maxSpeed = 10f;
@@ -41,6 +44,7 @@ namespace Player
         [Space]
         [SerializeField] private float _interactionDistance = 3f;
         
+        [Space]
         [SerializeField] private Transform _playerCamera;
 
         private CharacterController _characterController;
@@ -51,6 +55,9 @@ namespace Player
 
         public delegate void SprintAction(bool isSprinting);
         public event SprintAction OnSprintToggled;
+
+        public delegate void IsMoving(Vector3 direction);
+        public event IsMoving OnIsMoving;
         
         public void Initialize(DialogueManager dialogueManager)
         {
@@ -71,6 +78,8 @@ namespace Player
 
             var virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
             GetComponent<PlayerCameraFocusHandler>().GetCamera(virtualCamera);
+
+            GetComponent<CameraTilt>()?.Initialize(_playerCamera, this);
         }
         
         /// <summary>
@@ -80,6 +89,7 @@ namespace Player
         public void SetDirection(Vector2 direction)
         {
             _direction = direction;
+            OnIsMoving?.Invoke(direction);
             
             // If player is not moving, set current speed to 0
             if(_direction != Vector2.zero) return;
@@ -111,7 +121,7 @@ namespace Player
 
             var finalMoveVector = movementDirection * Time.fixedDeltaTime;
             
-            _characterController.SimpleMove(finalMoveVector.normalized * _currentSpeed);   
+            _characterController.SimpleMove(finalMoveVector.normalized * _currentSpeed);
         }
 
         public bool IsPlayerMoving()

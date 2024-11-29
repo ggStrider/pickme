@@ -8,7 +8,7 @@ namespace Player
         
         [SerializeField] private Transform _cameraParent;
         
-        [SerializeField, Range(0f, 10f)] private float _bobbingFrequency = 5f;
+        [SerializeField, Range(0f, 15f)] private float _bobbingFrequency = 5f;
         [SerializeField, Range(0f, 1f)] private float _bobbingAmplitude = 0.05f;
         private float _bobbingPhase;
 
