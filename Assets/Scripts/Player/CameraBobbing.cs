@@ -14,19 +14,22 @@ namespace Player
 
         [Space]
         [SerializeField] private float _boostFrequencyOnSprint = 2f;
+        private bool _isPlayerMoving;
         
         private float _bobbingValue;
-        private PlayerSystem _playerSystem;
 
         private void Start()
         {
-            _playerSystem = GetComponent<PlayerSystem>();
-            _playerSystem.OnSprintToggled += HandleBobbingOnSprint;
+            var sprintSystem = GetComponent<SprintSystem>();
+            if(sprintSystem != null) sprintSystem.OnSprintToggled += HandleBobbingOnSprint;
+         
+            var playerSystem = GetComponent<PlayerSystem>();
+            playerSystem.OnIsMoving += IsPlayerMoving;
         }
 
         private void Update()
         {
-            if(!_playerSystem.IsPlayerMoving() || !_enableBobbing) return;
+            if(!_isPlayerMoving || !_enableBobbing) return;
 
             // Using sinusoid to smoothly change camera position
             _bobbingValue += Time.deltaTime;
@@ -35,7 +38,12 @@ namespace Player
             _cameraParent.localPosition = Vector3.up * sinusValue;
         }
 
-        private void HandleBobbingOnSprint(bool isSprinting)
+        private void IsPlayerMoving(Vector2 direction)
+        {
+            _isPlayerMoving = direction != Vector2.zero;
+        }
+
+        private void HandleBobbingOnSprint(bool isSprinting, float value)
         {
             _bobbingPhase = _bobbingValue * _bobbingFrequency;
             
@@ -53,7 +61,7 @@ namespace Player
 
         private void OnDisable()
         {
-            _playerSystem.OnSprintToggled -= HandleBobbingOnSprint;
+            // _playerSystem.OnSprintToggled -= HandleBobbingOnSprint;
         }
     }
 }

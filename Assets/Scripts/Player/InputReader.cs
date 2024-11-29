@@ -12,6 +12,7 @@ namespace Player
         private PlayerMap _playerMap;
         
         private PlayerSystem _playerSystem;
+        private SprintSystem _sprintSystem;
         private PlayerCameraRotate _playerCameraRotate;
         
         private DialogueManager _dialogueManager;
@@ -23,6 +24,8 @@ namespace Player
             
             _playerSystem = GetComponent<PlayerSystem>();
             _playerCameraRotate = GetComponent<PlayerCameraRotate>();
+            _sprintSystem = GetComponent<SprintSystem>();
+            
             _peeControl = FindObjectOfType<PeeControl>();
             
             _playerMap = new PlayerMap();
@@ -83,7 +86,7 @@ namespace Player
         
         private void OnSprint(InputAction.CallbackContext context)
         {
-            _playerSystem.ToggleSprint(context.started);
+            _sprintSystem.ToggleSprint(context.started);
         }
 
         private void OnLook(InputAction.CallbackContext context)
