@@ -2,12 +2,13 @@
 
 using Dialogue;
 using Dialogue.Observers;
+
 using Handlers;
 using Handlers.Observer;
 
 namespace Player
 {
-    public class PlayerCameraRotate : MonoBehaviour, IDialogueStarted, IDialogueEnded, IFocused
+    public class PlayerCameraRotate : MonoBehaviour, IDialogueStarted, IDialogueEnded, IFocused, IPlayerCameraSet, INewCameraSet
     {
         [SerializeField] private Transform _camera;
         [SerializeField] private bool _canRotate = true;
@@ -37,10 +38,13 @@ namespace Player
             _camera = Camera.main.transform;
         }
 
-        public void Initialize(DialogueManager dialogueManager, PlayerCameraFocusHandler focusHandler)
+        public void Initialize(DialogueManager dialogueManager, PlayerCameraFocusHandler focusHandler, CamerasHandler camerasHandler)
         {
             dialogueManager.SubscribeDialogueStarted(this);
             dialogueManager.SubscribeDialogueEnded(this);
+            
+            camerasHandler.SubscribeToNewCameraSet(this);
+            camerasHandler.SubscribeToPlayerCameraSet(this);
             
             focusHandler.Subscribe(this);
         }
@@ -61,6 +65,8 @@ namespace Player
             _camera.localRotation = Quaternion.Euler(_rotationX, _rotationY, _camera.localRotation.z);
         }
 
+        #region Observer stuff
+        
         public void OnDialogueStarted(bool canControl)
         {
             _canRotate = canControl;
@@ -76,5 +82,17 @@ namespace Player
             _rotationX = newRotation.x;
             _rotationY = newRotation.y;
         }
+
+        public void OnPlayerCameraSet()
+        {
+            _canRotate = true;
+        }
+
+        public void OnNewCameraSet()
+        {
+            _canRotate = false;
+        }
+        
+        #endregion
     }
 }

@@ -8,7 +8,7 @@ using Dialogue.Observers;
 
 using GetObjects;
 using Handlers;
-
+using Handlers.Observer;
 using Hover;
 using Interact;
 
@@ -19,7 +19,7 @@ namespace Player
     [RequireComponent(typeof(PlayerCameraFocusHandler))]
     [RequireComponent(typeof(CameraTilt))]
     [RequireComponent(typeof(SprintSystem))]
-    public class PlayerSystem : MonoBehaviour, IDialogueStarted, IDialogueEnded
+    public class PlayerSystem : MonoBehaviour, IDialogueStarted, IDialogueEnded, IPlayerCameraSet, INewCameraSet
     {
         [SerializeField] private float _maxSpeed = 10f;
         [SerializeField] private float _addSpeedDelta = 1f;
@@ -41,7 +41,7 @@ namespace Player
         public delegate void IsMoving(Vector2 direction);
         public event IsMoving OnIsMoving;
 
-        public void Initialize(DialogueManager dialogueManager)
+        public void Initialize(DialogueManager dialogueManager, CamerasHandler camerasHandler)
         {
             _characterController = GetComponent<CharacterController>();
 
@@ -49,6 +49,9 @@ namespace Player
             
             dialogueManager.SubscribeDialogueStarted(this);
             dialogueManager.SubscribeDialogueEnded(this);
+            
+            camerasHandler.SubscribeToPlayerCameraSet(this);
+            camerasHandler.SubscribeToNewCameraSet(this);
 
             var virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
             GetComponent<PlayerCameraFocusHandler>().GetCamera(virtualCamera);
@@ -140,26 +143,30 @@ namespace Player
             prop.Interact(isPressing);
         }
 
+        private void OnDisable()
+        {
+            var sprint = GetComponent<SprintSystem>();
+            sprint.OnSprintToggled -= OnSprintToggled;
+        }
+        
         public void OnDialogueStarted(bool canControl)
         {
             _canMove = canControl;
-            
-            // i should think bout that
-            // _canSprint = canControl;
         }
 
         public void OnAllDialoguesEnded()
         {
             _canMove = true;
-            
-            // i should think bout that
-            // _canSprint = true;
         }
 
-        private void OnDisable()
+        public void OnPlayerCameraSet()
         {
-            var sprint = GetComponent<SprintSystem>();
-            sprint.OnSprintToggled -= OnSprintToggled;
+            _canMove = true;
+        }
+
+        public void OnNewCameraSet()
+        {
+            _canMove = false;
         }
     }
 }

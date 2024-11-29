@@ -7,6 +7,7 @@ using Hover;
 using Player;
 using UI.Crosshair;
 using Audio;
+using Cinemachine;
 using Handlers;
 using Hybrid.TakeObject;
 
@@ -20,16 +21,20 @@ namespace Infrastructure
         [SerializeField] private Image _crosshairImage;
         [SerializeField] private AudioSource _audioManagerPlayOneShotSource;
         [SerializeField] private Transform _playerItemPlace;
+        [SerializeField] private CinemachineVirtualCamera _playerVirtualCamera;
         
         private void Awake()
         {
+            var camerasHandler = GetComponent<CamerasHandler>();
+            camerasHandler.Initialize(_playerVirtualCamera);
+            
             var dialogueManager = GetComponent<DialogueManager>();
 
             var playerInput = FindObjectOfType<InputReader>();
             playerInput.Initialize(dialogueManager);
 
             var playerSystem = FindObjectOfType<PlayerSystem>();
-            playerSystem.Initialize(dialogueManager);
+            playerSystem.Initialize(dialogueManager, camerasHandler);
             
             var crosshairManager = GetComponent<CrosshairManager>();
             crosshairManager.Initialize(_crosshairImage);
@@ -41,7 +46,7 @@ namespace Infrastructure
             cameraFocusHandler.Initialize(dialogueManager);
             
             var playerCameraRotate = FindObjectOfType<PlayerCameraRotate>();
-            playerCameraRotate.Initialize(dialogueManager, cameraFocusHandler);
+            playerCameraRotate.Initialize(dialogueManager, cameraFocusHandler, camerasHandler);
             
             var dialogues = FindObjectsOfType<DialogueStart>();
             InitializeDialogues(dialogues, dialogueManager, cameraFocusHandler);
