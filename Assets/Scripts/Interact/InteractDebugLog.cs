@@ -2,11 +2,14 @@ using UnityEngine;
 
 namespace Interact
 {
-    public class InteractDebugLog : MonoBehaviour, IInteract
+    public class InteractDebugLog : InteractCompleteTask
     {
-        public void Interact(bool isPressing)
+        public override void Interact(bool isPressing)
         {
+            if (!isPressing) return;
+            
             Debug.Log("Interacted!");
+            base.Interact(true);
         }
     }
 }
