@@ -158,5 +158,11 @@ namespace Player
             // i should think bout that
             // _canSprint = true;
         }
+
+        private void OnDisable()
+        {
+            var sprint = GetComponent<SprintSystem>();
+            sprint.OnSprintToggled -= OnSprintToggled;
+        }
     }
 }

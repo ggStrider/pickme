@@ -21,7 +21,7 @@ namespace Player
         private void Start()
         {
             var sprintSystem = GetComponent<SprintSystem>();
-            if(sprintSystem != null) sprintSystem.OnSprintToggled += HandleBobbingOnSprint;
+            sprintSystem.OnSprintToggled += HandleBobbingOnSprint;
          
             var playerSystem = GetComponent<PlayerSystem>();
             playerSystem.OnIsMoving += IsPlayerMoving;
@@ -61,7 +61,11 @@ namespace Player
 
         private void OnDisable()
         {
-            // _playerSystem.OnSprintToggled -= HandleBobbingOnSprint;
+            var sprintSystem = GetComponent<SprintSystem>();
+            sprintSystem.OnSprintToggled -= HandleBobbingOnSprint;
+         
+            var playerSystem = GetComponent<PlayerSystem>();
+            playerSystem.OnIsMoving -= IsPlayerMoving;
         }
     }
 }
