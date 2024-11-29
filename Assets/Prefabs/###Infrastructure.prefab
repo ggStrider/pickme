@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 972095392894167903}
   - component: {fileID: 6639578670137546358}
   - component: {fileID: 4237763969815761205}
+  - component: {fileID: 3320589650580829191}
+  - component: {fileID: 8482116721034324403}
   m_Layer: 0
   m_Name: '###Infrastructure'
   m_TagString: Untagged
@@ -51,6 +53,7 @@ MonoBehaviour:
   _crosshairImage: {fileID: 0}
   _audioManagerPlayOneShotSource: {fileID: 6382330534205772780}
   _playerItemPlace: {fileID: 0}
+  _playerVirtualCamera: {fileID: 0}
 --- !u!114 &972095392894167903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +94,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemAddedSound: {fileID: 0}
+--- !u!114 &3320589650580829191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448494535625015735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d11f3d98213e41c5ac8a75f8dd82dca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tasksData:
+  - <Task>k__BackingField: {fileID: 11400000, guid: c21d8299bf699bf40a25dd57003367b0, type: 2}
+    <TextComponent>k__BackingField: {fileID: 0}
+    Completed: 0
+--- !u!114 &8482116721034324403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448494535625015735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e3c34341a3462591b280d079f07411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5053376389516812569
 GameObject:
   m_ObjectHideFlags: 0
