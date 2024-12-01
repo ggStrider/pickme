@@ -48,6 +48,11 @@ namespace Handlers
 
         public void SwitchCamera(CinemachineVirtualCamera newCamera)
         {
+            if (newCamera == _playerCamera)
+            {
+                ReturnToPlayerCamera();
+                return;
+            }
             _currentCamera = newCamera;
             
             _currentCamera.enabled = true;

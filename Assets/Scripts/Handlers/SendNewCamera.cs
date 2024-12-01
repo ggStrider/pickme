@@ -11,6 +11,7 @@ namespace Handlers
         
         public void Interact(bool isPressing)
         {
+            if (!isPressing) return;
             CamerasHandler.Instance.SwitchCamera(_cameraToEnable);
         }
     }

@@ -162,11 +162,17 @@ namespace Player
         public void OnPlayerCameraSet()
         {
             _canMove = true;
+            
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         public void OnNewCameraSet()
         {
             _canMove = false;
+            
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 }
