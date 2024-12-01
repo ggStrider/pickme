@@ -2,6 +2,7 @@ using UnityEngine;
 using Data.Observers;
 
 using System.Collections.Generic;
+using Data;
 
 namespace Tasks
 {
@@ -13,6 +14,7 @@ namespace Tasks
         private void Start()
         {
             if(Instance == null) Instance = this;
+            GameSession.Instance.SubscribeItemAdded(this);
         }
 
         public void CheckCompleteCondition()
