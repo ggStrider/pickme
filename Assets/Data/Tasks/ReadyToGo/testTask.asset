@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2ce5153e0147048192ae167c1b552a, type: 3}
   m_Name: testTask
   m_EditorClassIdentifier: 
-  taskObjective: 
-  isCompleted: 0
-  taskCondition: {fileID: 0}
-  taskCompleteAction: {fileID: 0}
+  taskObjective: Take an cube
+  isCompleted: 1
+  taskCondition: {fileID: 11400000, guid: d87a1f513cc129442b88efbba8616207, type: 2}
+  taskCompleteAction: {fileID: 11400000, guid: 69316223c5724b542aa7de8f7fb7c00c, type: 2}

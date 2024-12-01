@@ -3184,8 +3184,6 @@ GameObject:
   - component: {fileID: 1540572575}
   - component: {fileID: 1540572574}
   - component: {fileID: 1540572580}
-  - component: {fileID: 1540572579}
-  - component: {fileID: 1540572578}
   m_Layer: 0
   m_Name: Obstacle<n> (3)
   m_TagString: Untagged
@@ -3279,33 +3277,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 805046752}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1540572578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540572573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa9747873ee407b8aa3c4096aaee34d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameTaskToComplete: {fileID: 0}
---- !u!114 &1540572579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540572573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75b0612a388940749ae388290ce2de63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CompleteTaskOnInteracted: 0
-  _task: {fileID: 0}
 --- !u!114 &1540572580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3318,7 +3289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85a6944dcdb68b644a664eb903266ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemToAdd: {fileID: 11400000, guid: 10111377906d2484aa9ae69b5cfb98e4, type: 2}
+  _gameItemToAdd: {fileID: 11400000, guid: 10111377906d2484aa9ae69b5cfb98e4, type: 2}
 --- !u!1 &1585255521
 GameObject:
   m_ObjectHideFlags: 0
@@ -3483,7 +3454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85a6944dcdb68b644a664eb903266ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemToAdd: {fileID: 11400000, guid: 10111377906d2484aa9ae69b5cfb98e4, type: 2}
+  _gameItemToAdd: {fileID: 11400000, guid: 10111377906d2484aa9ae69b5cfb98e4, type: 2}
 --- !u!1 &1626071754
 GameObject:
   m_ObjectHideFlags: 0
@@ -4258,8 +4229,6 @@ GameObject:
   - component: {fileID: 1939669445}
   - component: {fileID: 1939669444}
   - component: {fileID: 1939669443}
-  - component: {fileID: 1939669442}
-  - component: {fileID: 1939669448}
   m_Layer: 0
   m_Name: Obstacle<n> (7)
   m_TagString: Untagged
@@ -4282,20 +4251,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 805046752}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1939669442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939669440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75b0612a388940749ae388290ce2de63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CompleteTaskOnInteracted: 1
-  _task: {fileID: 1939669448}
 --- !u!114 &1939669443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4397,19 +4352,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939669440}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1939669448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939669440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa9747873ee407b8aa3c4096aaee34d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameTaskToComplete: {fileID: 11400000, guid: c21d8299bf699bf40a25dd57003367b0, type: 2}
 --- !u!1 &1983049874
 GameObject:
   m_ObjectHideFlags: 0
@@ -4673,6 +4615,14 @@ PrefabInstance:
       propertyPath: _dialogueText
       value: 
       objectReference: {fileID: 142925991}
+    - target: {fileID: 3320589650580829191, guid: b5ea39cc0f7288449a9ee596c97e01d2, type: 3}
+      propertyPath: _tasks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3320589650580829191, guid: b5ea39cc0f7288449a9ee596c97e01d2, type: 3}
+      propertyPath: _tasks.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 56c719ecf8e16c547920c6bfcf1acb68, type: 2}
     - target: {fileID: 3448494535625015735, guid: b5ea39cc0f7288449a9ee596c97e01d2, type: 3}
       propertyPath: m_Name
       value: '###Infrastructure'
@@ -4729,6 +4679,10 @@ PrefabInstance:
       propertyPath: _playerVirtualCamera
       value: 
       objectReference: {fileID: 1131622223}
+    - target: {fileID: 8482116721034324403, guid: b5ea39cc0f7288449a9ee596c97e01d2, type: 3}
+      propertyPath: task
+      value: 
+      objectReference: {fileID: 11400000, guid: 56c719ecf8e16c547920c6bfcf1acb68, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

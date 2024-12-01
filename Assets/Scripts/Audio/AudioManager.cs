@@ -18,6 +18,7 @@ namespace Audio
         
         public void OnItemAdded()
         {
+            if(!_itemAddedSound) return;
             _playOneShotSource.PlayOneShot(_itemAddedSound);
         }
     }
