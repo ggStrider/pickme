@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Data.Items
 {
     [Serializable, CreateAssetMenu(fileName = "New Item", menuName = "Thenexy/Item")]
-    public class Item : ScriptableObject
+    public class GameItem : ScriptableObject
     {
         public string ItemName;
     }

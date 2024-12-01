@@ -7,7 +7,7 @@ namespace Interact
 {
     public class InteractAddItem : MonoBehaviour, IInteract
     {
-        [SerializeField] private Item _itemToAdd;
+        [SerializeField] private GameItem _gameItemToAdd;
         private GameSession _gameSession;
 
         private void Start()
@@ -19,7 +19,7 @@ namespace Interact
         {
             if (!isPressing) return;
             
-            _gameSession.AddItemToInventory(_itemToAdd);
+            _gameSession.AddItemToInventory(_gameItemToAdd);
             gameObject.SetActive(false);
         }
     }

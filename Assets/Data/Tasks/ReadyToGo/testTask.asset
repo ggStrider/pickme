@@ -10,6 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c2ce5153e0147048192ae167c1b552a, type: 3}
-  m_Name: _testTask
+  m_Name: testTask
   m_EditorClassIdentifier: 
-  taskName: sigma
+  taskObjective: 
+  isCompleted: 0
+  taskCondition: {fileID: 0}
+  taskCompleteAction: {fileID: 0}

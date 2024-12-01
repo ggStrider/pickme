@@ -20,14 +20,14 @@ namespace Data
             DontDestroyOnLoad(gameObject);
         }
 
-        public bool IsInventoryHasItem(Item item)
+        public bool IsInventoryHasItem(GameItem gameItem)
         {
-            return _data.Items.Contains(item);
+            return _data.Items.Contains(gameItem);
         }
 
-        public void AddItemToInventory(Item item)
+        public void AddItemToInventory(GameItem gameItem)
         {
-            _data.Items.Add(item);
+            _data.Items.Add(gameItem);
             
             NotifyItemAdded();
         }

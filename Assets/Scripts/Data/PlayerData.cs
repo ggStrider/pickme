@@ -8,6 +8,6 @@ namespace Data
     [Serializable]
     public class PlayerData
     {
-        public List<Item> Items;
+        public List<GameItem> Items;
     }
 }
