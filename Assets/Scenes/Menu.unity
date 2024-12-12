@@ -1351,7 +1351,7 @@ MonoBehaviour:
   _unSelectedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.52156866}
   _buttonIndex: 0
   _menuIndex: 0
-  _animateMethod: {fileID: 11400000, guid: 8df4a874f4496494082a97ed6a66710a, type: 2}
+  _animateMethod: {fileID: 11400000, guid: 7fcbaa663a70ed0498cee9e7f2afb215, type: 2}
 --- !u!4 &949031271
 Transform:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ namespace UI.Menu.AnimateMethods
     {
         [SerializeField] private float _animationFragmentDuration;
         [SerializeField] private Vector3 _rotateAxis = new Vector3(0, 0, 360);
-        [SerializeField] private Vector3 _parentSize = Vector3.one;
+        [SerializeField] private Vector3 _newMenuEndSize = Vector3.one;
         
         public override void AnimateMenuCategory(RectTransform lastMenuParent, RectTransform newMenuParent, Action onStart,
             Action onCompleteAction)
@@ -23,10 +23,12 @@ namespace UI.Menu.AnimateMethods
             // Hide
             sequence.Append(lastMenuParent.DORotate(_rotateAxis, _animationFragmentDuration, RotateMode.WorldAxisAdd));
             sequence.Join(lastMenuParent.DOScale(Vector3.zero, _animationFragmentDuration));
+
+            newMenuParent.localScale = Vector3.zero;
             
             // Show
             sequence.Append(newMenuParent.DORotate(_rotateAxis, _animationFragmentDuration, RotateMode.WorldAxisAdd));
-            sequence.Join(newMenuParent.DOScale(_parentSize, _animationFragmentDuration));
+            sequence.Join(newMenuParent.DOScale(_newMenuEndSize, _animationFragmentDuration));
             
             sequence.Play();
             sequence.OnComplete(() => onCompleteAction?.Invoke());
