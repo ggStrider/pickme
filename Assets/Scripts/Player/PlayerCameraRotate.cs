@@ -79,7 +79,10 @@ namespace Player
 
         public void OnCameraFocused(Vector3 newRotation)
         {
-            _rotationX = newRotation.x;
+            // Normalizing angle to prevent abrupt next rotation 
+            var normalizedX = Mathf.DeltaAngle(0, newRotation.x);
+            _rotationX = Mathf.Clamp(normalizedX, _verticalMinAngle, _verticalMaxAngle);
+            
             _rotationY = newRotation.y;
         }
 
