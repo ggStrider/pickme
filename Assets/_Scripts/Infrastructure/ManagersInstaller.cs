@@ -1,6 +1,7 @@
 ﻿using Dialogue;
 using Handlers;
 using Player;
+using Player.Main;
 using UnityEngine;
 
 using Zenject;

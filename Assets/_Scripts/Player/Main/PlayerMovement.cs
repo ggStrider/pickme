@@ -1,17 +1,14 @@
-using UnityEngine;
-
 using System;
-using Zenject;
-
 using Creature;
-
 using Dialogue;
 using Dialogue.Observers;
-
 using Handlers;
 using Handlers.Observer;
+using Player.Additional;
+using UnityEngine;
+using Zenject;
 
-namespace Player
+namespace Player.Main
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerMovement : MonoBehaviour, IMovable, IDialogueStarted, IDialogueEnded,

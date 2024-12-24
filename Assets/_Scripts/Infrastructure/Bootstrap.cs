@@ -10,6 +10,7 @@ using Audio;
 using Cinemachine;
 using Handlers;
 using Hybrid.TakeObject;
+using Player.Main;
 using Zenject;
 
 namespace Infrastructure

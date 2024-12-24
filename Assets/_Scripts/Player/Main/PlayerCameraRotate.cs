@@ -1,13 +1,11 @@
-﻿using UnityEngine;
-
-using Dialogue;
+﻿using Dialogue;
 using Dialogue.Observers;
-
 using Handlers;
 using Handlers.Observer;
+using UnityEngine;
 using Zenject;
 
-namespace Player
+namespace Player.Main
 {
     public class PlayerCameraRotate : MonoBehaviour, IDialogueStarted, IDialogueEnded, IFocused, IPlayerCameraSet, INewCameraSet
     {

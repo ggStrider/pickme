@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-
+﻿using Data;
 using GetObjects;
-using Data;
 using Interact;
+using Player.Main;
+using UnityEngine;
 using Zenject;
 
-namespace Player
+namespace Player.Additional
 {
     public class InteractSystem : MonoBehaviour
     {

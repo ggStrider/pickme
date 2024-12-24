@@ -1,9 +1,8 @@
+using Creature;
 using UnityEngine;
 using Zenject;
 
-using Creature;
-
-namespace Player
+namespace Player.Additional
 {
     public class CameraTilt : MonoBehaviour
     {

@@ -1,8 +1,9 @@
 using System;
+using Player.Main;
 using UnityEngine;
 using Zenject;
 
-namespace Player
+namespace Player.Additional
 {
     public class SprintSystem : MonoBehaviour
     {

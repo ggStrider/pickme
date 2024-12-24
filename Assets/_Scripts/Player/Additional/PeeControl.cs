@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Player
+namespace Player.Additional
 {
     public class PeeControl : MonoBehaviour
     {

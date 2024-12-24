@@ -1,10 +1,11 @@
 ﻿using Data;
 using GetObjects;
 using Interact;
+using Player.Main;
 using UnityEngine;
 using Zenject;
 
-namespace Player
+namespace Player.Additional
 {
     public class InteractWithPropSystem : MonoBehaviour
     {

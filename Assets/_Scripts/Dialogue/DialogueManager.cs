@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Dialogue.Observers;
 using Player;
+using Player.Main;
 using Zenject;
 
 namespace Dialogue

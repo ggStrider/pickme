@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace Player.Main
 {
     public class InputReader : MonoBehaviour
     {
