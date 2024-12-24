@@ -8,12 +8,13 @@ namespace Hover
 {
     public class HoveredCheckRay : MonoBehaviour
     {
-        private Transform _outPoint;
-        private float _distance;
-
+        [SerializeField] private Transform _outPoint;
+        [SerializeField] private float _distance = 3f;
+        
         private RaycastHit _hitInfo;
 
         private HashSet<IHovered> _hoveredObjects = new HashSet<IHovered>();
+        
 
         public void SetSettings(Transform outPoint, float distance)
         {

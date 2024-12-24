@@ -5,6 +5,8 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using Dialogue.Observers;
+using Player;
+using Zenject;
 
 namespace Dialogue
 {
@@ -19,6 +21,18 @@ namespace Dialogue
         
         private bool _busy;
         private int _lineIndex;
+
+        private InputReader _inputReader;
+        
+        [Inject]
+        private void Construct(InputReader inputReader)
+        {
+            _inputReader = inputReader;
+            _inputReader.OnLeftMousePressStateChanged += state =>
+            {
+                if (state) NextLine();
+            };
+        }
         
         public void GetDialogueData(DialogueData dialogueData)
         {

@@ -23,7 +23,7 @@ namespace Player
             var sprintSystem = GetComponent<SprintSystem>();
             sprintSystem.OnSprintToggled += HandleBobbingOnSprint;
          
-            var playerSystem = GetComponent<PlayerSystem>();
+            var playerSystem = GetComponent<PlayerMovement>();
             playerSystem.OnIsMoving += IsPlayerMoving;
         }
 
@@ -64,7 +64,7 @@ namespace Player
             var sprintSystem = GetComponent<SprintSystem>();
             sprintSystem.OnSprintToggled -= HandleBobbingOnSprint;
          
-            var playerSystem = GetComponent<PlayerSystem>();
+            var playerSystem = GetComponent<PlayerMovement>();
             playerSystem.OnIsMoving -= IsPlayerMoving;
         }
     }

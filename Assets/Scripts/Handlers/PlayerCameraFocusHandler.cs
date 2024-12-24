@@ -10,6 +10,7 @@ using Handlers.Settings.CameraFocusHandler;
 using Handlers.Observer;
 
 using System.Collections.Generic;
+using Zenject;
 
 namespace Handlers
 {
@@ -24,17 +25,15 @@ namespace Handlers
 
         private float _defaultFOV;
 
-        public void GetCamera(CinemachineVirtualCamera virtualCamera)
+        [Inject]
+        private void Construct(CinemachineVirtualCamera virtualCamera, DialogueManager dialogueManager)
         {
             _camera = virtualCamera.transform;
             _vCamera = virtualCamera;
+
+            dialogueManager.SubscribeDialogueEnded(this);
             
             _defaultFOV = _vCamera.m_Lens.FieldOfView;
-        }
-        
-        public void Initialize(DialogueManager dialogueManager)
-        { 
-            dialogueManager.SubscribeDialogueEnded(this);
         }
         
         public void LookAtAndFocus(Transform target)
@@ -48,6 +47,7 @@ namespace Handlers
         private void NotifyAllObservers(Vector3 newRotation)
         {
             if(_observers.Count == 0) return;
+            
             foreach (var observer in _observers)
             {
                 observer.OnCameraFocused(newRotation);

@@ -1,25 +1,21 @@
-using Cinemachine;
 using UnityEngine;
 
-using Data;
+using System;
+using Zenject;
+
+using Creature;
 
 using Dialogue;
 using Dialogue.Observers;
 
-using GetObjects;
 using Handlers;
 using Handlers.Observer;
-using Hover;
-using Interact;
 
 namespace Player
 {
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(HoveredCheckRay))]
-    [RequireComponent(typeof(PlayerCameraFocusHandler))]
-    [RequireComponent(typeof(CameraTilt))]
-    [RequireComponent(typeof(SprintSystem))]
-    public class PlayerSystem : MonoBehaviour, IDialogueStarted, IDialogueEnded, IPlayerCameraSet, INewCameraSet
+    public class PlayerMovement : MonoBehaviour, IMovable, IDialogueStarted, IDialogueEnded,
+        IPlayerCameraSet, INewCameraSet
     {
         [SerializeField] private float _maxSpeed = 10f;
         [SerializeField] private float _addSpeedDelta = 1f;
@@ -27,57 +23,48 @@ namespace Player
         [SerializeField] private bool _canMove = true;
 
         [Space]
-        [SerializeField] private float _interactionDistance = 3f;
-        
-        [Space]
         [SerializeField] private Transform _playerCamera;
 
         private CharacterController _characterController;
 
-        private IInteractProp _currentInHand;
-        
         private Vector2 _direction;
 
-        public delegate void IsMoving(Vector2 direction);
-        public event IsMoving OnIsMoving;
+        public event Action<Vector2> OnIsMoving;
 
-        public void Initialize(DialogueManager dialogueManager, CamerasHandler camerasHandler)
+        private InputReader _inputReader;
+        private SprintSystem _sprintSystem;
+
+        [Inject]
+        private void Construct(DialogueManager dialogueManager, CamerasHandler camerasHandler, 
+            SprintSystem sprintSystem, InputReader inputReader)
         {
-            _characterController = GetComponent<CharacterController>();
-
-            GetComponent<HoveredCheckRay>().SetSettings(_playerCamera, _interactionDistance);
-            
             dialogueManager.SubscribeDialogueStarted(this);
             dialogueManager.SubscribeDialogueEnded(this);
             
             camerasHandler.SubscribeToPlayerCameraSet(this);
             camerasHandler.SubscribeToNewCameraSet(this);
 
-            var virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
-            GetComponent<PlayerCameraFocusHandler>().GetCamera(virtualCamera);
-
-            GetComponent<CameraTilt>()?.Initialize(_playerCamera, this);
-
-            var sprint = GetComponent<SprintSystem>();
-            sprint.OnSprintToggled += OnSprintToggled;
+            sprintSystem.OnSprintToggled += OnSprintToggled;
+            inputReader.OnMove += SetDirection;
         }
 
-        private void OnSprintToggled(bool isSprinting, float speedBoost)
+        private void OnDestroy()
         {
-            _maxSpeed += speedBoost;
+            if(_inputReader != null) _inputReader.OnMove -= SetDirection;
+            if(_sprintSystem != null)_sprintSystem.OnSprintToggled -= OnSprintToggled;
+        }
+
+        private void Awake()
+        {
+            _characterController = GetComponent<CharacterController>();
         }
         
-        /// <summary>
-        /// Sets movement direction for player 
-        /// </summary>
-        /// <param name="direction">Movement vector</param>
         public void SetDirection(Vector2 direction)
         {
             _direction = direction;
             
             OnIsMoving?.Invoke(_canMove ? direction : Vector2.zero);
             
-            // If player is not moving, set current speed to 0
             if(_direction != Vector2.zero) return;
             _currentSpeed = 0;
         }
@@ -87,7 +74,7 @@ namespace Player
             if(_canMove) Move();
         }
 
-        private void Move()
+        public void Move()
         {
             if (IsPlayerMoving())
             {
@@ -109,45 +96,13 @@ namespace Player
             _characterController.SimpleMove(finalMoveVector.normalized * _currentSpeed);
         }
 
-        public bool IsPlayerMoving()
+        private bool IsPlayerMoving()
         {
             if (!_canMove) return false;
             return _direction != Vector2.zero;
         }
 
-        public void Interact(bool isPressing)
-        {
-            var objectInRay = GetObjectByRay.Get(_playerCamera.position,
-                _playerCamera.forward, _interactionDistance, DefaultData.TriggerLayer);
-
-            objectInRay?.GetComponent<IInteract>()?.Interact(isPressing);
-        }
-
-        public void InteractWithProp(bool isPressing)
-        {
-            if (_currentInHand != null && !isPressing)
-            {
-                _currentInHand.Interact(false);
-
-                _currentInHand = null;
-                return;
-            }
-            
-            var prop = GetObjectByRay.Get(_playerCamera.position,
-                _playerCamera.forward, _interactionDistance, DefaultData.TriggerLayer)?
-                .GetComponent<IInteractProp>();
-            
-            if(prop is null) return;
-            
-            _currentInHand = prop;
-            prop.Interact(isPressing);
-        }
-
-        private void OnDisable()
-        {
-            var sprint = GetComponent<SprintSystem>();
-            sprint.OnSprintToggled -= OnSprintToggled;
-        }
+        #region Subscriptions
         
         public void OnDialogueStarted(bool canControl)
         {
@@ -174,5 +129,12 @@ namespace Player
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+        
+        private void OnSprintToggled(bool isSprinting, float speedBoost)
+        {
+            _maxSpeed += speedBoost;
+        }
+        
+        #endregion
     }
 }

@@ -10,6 +10,7 @@ using Audio;
 using Cinemachine;
 using Handlers;
 using Hybrid.TakeObject;
+using Zenject;
 
 namespace Infrastructure
 {
@@ -18,6 +19,8 @@ namespace Infrastructure
     [RequireComponent(typeof(AudioManager))]
     public class Bootstrap : MonoBehaviour
     {
+        // Refactor this class later
+        
         [SerializeField] private Image _crosshairImage;
         [SerializeField] private AudioSource _audioManagerPlayOneShotSource;
         [SerializeField] private Transform _playerItemPlace;
@@ -30,11 +33,7 @@ namespace Infrastructure
             
             var dialogueManager = GetComponent<DialogueManager>();
 
-            var playerInput = FindObjectOfType<InputReader>();
-            playerInput.Initialize(dialogueManager);
-
-            var playerSystem = FindObjectOfType<PlayerSystem>();
-            playerSystem.Initialize(dialogueManager, camerasHandler);
+            var playerSystem = FindObjectOfType<PlayerMovement>();
             
             var crosshairManager = GetComponent<CrosshairManager>();
             crosshairManager.Initialize(_crosshairImage);
@@ -43,10 +42,6 @@ namespace Infrastructure
             InitializeCrosshairHovered(crosshairManager, hoveredCrosshair);
             
             var cameraFocusHandler = playerSystem.gameObject.GetComponent<PlayerCameraFocusHandler>();
-            cameraFocusHandler.Initialize(dialogueManager);
-            
-            var playerCameraRotate = FindObjectOfType<PlayerCameraRotate>();
-            playerCameraRotate.Initialize(dialogueManager, cameraFocusHandler, camerasHandler);
             
             var dialogues = FindObjectsOfType<DialogueStart>();
             InitializeDialogues(dialogues, dialogueManager, cameraFocusHandler);

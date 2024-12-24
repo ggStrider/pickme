@@ -10275,7 +10275,6 @@ GameObject:
   - component: {fileID: 8060541726589329733}
   - component: {fileID: 8340564275311106312}
   - component: {fileID: 2391962029127524768}
-  - component: {fileID: 6410698064662015715}
   - component: {fileID: 310617270969285259}
   - component: {fileID: 4851372403710572096}
   - component: {fileID: 2611142868659449716}
@@ -10283,6 +10282,8 @@ GameObject:
   - component: {fileID: 7199422217238227290}
   - component: {fileID: 7107386670617924617}
   - component: {fileID: 9168631330073365262}
+  - component: {fileID: 3322473557628379840}
+  - component: {fileID: 6040550089475146783}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -10406,18 +10407,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6410698064662015715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8097528818688488881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17249c8737de4dc68237ed8f0ce3d835, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &310617270969285259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10434,7 +10423,6 @@ MonoBehaviour:
   _addSpeedDelta: 1
   _currentSpeed: 0
   _canMove: 1
-  _interactionDistance: 3
   _playerCamera: {fileID: 7177988986552444431}
 --- !u!114 &4851372403710572096
 MonoBehaviour:
@@ -10482,6 +10470,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21937baac8b4458997f612b41a4314a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _outPoint: {fileID: 8765341420351497432}
+  _distance: 3
 --- !u!114 &7199422217238227290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10507,7 +10497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e453e33ba931046af4c919fc14dda0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerCamera: {fileID: 0}
+  _cameraToTilt: {fileID: 7177988986552444431}
   _currentTiltAngle: 0
   _maxTiltAngle: 1.5
   _changeTiltAngleDelta: 0.005
@@ -10534,6 +10524,34 @@ MonoBehaviour:
   _currentStamina: 0
   _subtractStaminaDelta: 1
   _addStaminaDelta: 0.5
+--- !u!114 &3322473557628379840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8097528818688488881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4f2fc835b4a42d886c42df5c03e0cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCamera: {fileID: 8765341420351497432}
+  _interactRayDistance: 3
+--- !u!114 &6040550089475146783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8097528818688488881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc5366ba737a4847b8a0bc2dd47bb608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _outFrom: {fileID: 8765341420351497432}
+  _checkDistance: 3
 --- !u!1 &8190401088138066817
 GameObject:
   m_ObjectHideFlags: 0

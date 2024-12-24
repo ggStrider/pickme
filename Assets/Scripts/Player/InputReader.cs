@@ -1,98 +1,59 @@
 ﻿using UnityEngine;
+using System;
 using UnityEngine.InputSystem;
-
-using Dialogue;
 
 namespace Player
 {
-    [RequireComponent(typeof(PlayerSystem))]
-    [RequireComponent(typeof(PlayerCameraRotate))]
     public class InputReader : MonoBehaviour
     {
+        public event Action<Vector2> OnMove;
+        public event Action<bool> OnLeftMousePressStateChanged;
+        public event Action<bool> OnSprintStateChanged;
+        public event Action<Vector2> OnMouseLook;
+        public event Action<bool> OnInteractButtonPressStateChanged;
+        
         private PlayerMap _playerMap;
         
-        private PlayerSystem _playerSystem;
-        private SprintSystem _sprintSystem;
-        private PlayerCameraRotate _playerCameraRotate;
-        
-        private DialogueManager _dialogueManager;
-        private PeeControl _peeControl;
-
-        public void Initialize(DialogueManager dialogueManager)
+        private void Awake()
         {
-            _dialogueManager = dialogueManager;
-            
-            _playerSystem = GetComponent<PlayerSystem>();
-            _playerCameraRotate = GetComponent<PlayerCameraRotate>();
-            _sprintSystem = GetComponent<SprintSystem>();
-            
-            _peeControl = FindObjectOfType<PeeControl>();
-            
             _playerMap = new PlayerMap();
 
-            _playerMap.Main.Move.performed += OnMove;
-            _playerMap.Main.Move.canceled += OnMove;
-            
-            _playerMap.Main.Sprint.started += OnSprint;
-            _playerMap.Main.Sprint.canceled += OnSprint;
+            _playerMap.Main.Move.performed += context => NotifyVector2(context, OnMove);
+            _playerMap.Main.Move.canceled += context => NotifyVector2(context, OnMove);
 
-            _playerMap.Main.Interact.performed += OnInteract;
-            _playerMap.Main.Interact.canceled += OnInteract;
+            _playerMap.Main.Sprint.started += _ => OnSprintStateChanged?.Invoke(true);
+            _playerMap.Main.Sprint.canceled += _ => OnSprintStateChanged?.Invoke(false);
+
+            _playerMap.Main.Interact.performed += _ => OnInteractButtonPressStateChanged?.Invoke(true);
+            _playerMap.Main.Interact.canceled += _ => OnInteractButtonPressStateChanged?.Invoke(false);
+
+            _playerMap.Main.Look.performed += context => NotifyVector2(context, OnMouseLook);
+            _playerMap.Main.Look.canceled += context => NotifyVector2(context, OnMouseLook);
+
+            _playerMap.Main.LMB.started += _ => OnLeftMousePressStateChanged?.Invoke(true);
+            _playerMap.Main.LMB.canceled += _ => OnLeftMousePressStateChanged?.Invoke(false);
             
-            _playerMap.Main.Look.performed += OnLook;
-            _playerMap.Main.Look.canceled += OnLook;
-            
-            // _playerMap.Main.Look.started += OnControlPee;
-            // _playerMap.Main.Look.canceled += OnControlPee;
-            
-            _playerMap.Main.LMB.started += OnLeftMousePressed;
-            
-            _playerMap.Main.LMB.started += OnInteractWithProp;
-            _playerMap.Main.LMB.canceled += OnInteractWithProp;
-            
-            _playerMap.Enable();
+            _playerMap.Main.Enable();
             
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        private void OnControlPee(InputAction.CallbackContext context)
+        private void OnDestroy()
         {
-            const float sensitivity = 0.01f;
-            var y = context.ReadValue<Vector2>().x * sensitivity;
-            _peeControl.SetDirection(y);
+            _playerMap?.Dispose();
+
+            OnMove = null;
+            OnLeftMousePressStateChanged = null;
+            OnSprintStateChanged = null;
+            OnMouseLook = null;
+            OnInteractButtonPressStateChanged = null;
         }
 
-        private void OnInteract(InputAction.CallbackContext context)
-        {
-            _playerSystem.Interact(context.performed);
-        }
-
-        private void OnInteractWithProp(InputAction.CallbackContext context)
-        {
-            _playerSystem.InteractWithProp(context.started);
-        }
-
-        private void OnLeftMousePressed(InputAction.CallbackContext context)
-        {
-            _dialogueManager.NextLine();
-        }
-
-        private void OnMove(InputAction.CallbackContext context)
+        private void NotifyVector2(InputAction.CallbackContext context, Action<Vector2> action)
         {
             var direction = context.ReadValue<Vector2>();
-            _playerSystem.SetDirection(direction);
-        }
-        
-        private void OnSprint(InputAction.CallbackContext context)
-        {
-            _sprintSystem.ToggleSprint(context.started);
-        }
-
-        private void OnLook(InputAction.CallbackContext context)
-        {
-            var direction = context.ReadValue<Vector2>();
-            _playerCameraRotate.SetLookRotation(direction);
+            action?.Invoke(direction);
         }
     }
 }

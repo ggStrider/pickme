@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace Player
 {
@@ -19,10 +21,23 @@ namespace Player
         [SerializeField] private float _subtractStaminaDelta = 1;
         [SerializeField] private float _addStaminaDelta = 0.5f;
         
-        public delegate void SprintAction(bool isSprinting, float speedBoost);
-        public event SprintAction OnSprintToggled;
+        public event Action<bool, float> OnSprintToggled;
 
         private bool _wasSprinting;
+        
+        private InputReader _inputReader;
+
+        [Inject]
+        private void Construct(InputReader inputReader)
+        {
+            _inputReader = inputReader;
+            _inputReader.OnSprintStateChanged += ToggleSprint;
+        }
+
+        private void OnDestroy()
+        {
+            _inputReader.OnSprintStateChanged -= ToggleSprint;
+        }
 
         private void Start()
         {

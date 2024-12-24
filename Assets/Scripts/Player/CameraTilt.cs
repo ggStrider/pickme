@@ -1,10 +1,13 @@
 using UnityEngine;
+using Zenject;
+
+using Creature;
 
 namespace Player
 {
     public class CameraTilt : MonoBehaviour
     {
-        [SerializeField] private Transform _playerCamera;
+        [SerializeField] private Transform _cameraToTilt;
         
         [SerializeField] private float _currentTiltAngle;
         [SerializeField] private float _maxTiltAngle = 1.5f;
@@ -17,15 +20,31 @@ namespace Player
         
         private Vector3 _direction;
 
-        public void Initialize(Transform cameraTransform, PlayerSystem playerSystem)
+        private IMovable _movable;
+        
+        [Inject]
+        private void Construct(IMovable movable)
         {
-            _playerCamera = cameraTransform;
-            playerSystem.OnIsMoving += GetDirection;
+            _movable = movable;
+            movable.OnIsMoving += GetDirection;
+        }
+
+        private void Awake()
+        {
+            if (!_cameraToTilt)
+            {
+                throw new MissingComponentException("Missing camera to tilt");
+            }
+        }
+
+        private void OnDestroy()
+        {
+            _movable.OnIsMoving -= GetDirection;
         }
         
         private void LateUpdate()
         {
-            if (!_playerCamera) return;
+            if (!_cameraToTilt) return;
             
             // Right
             if (_direction.x > 0)
@@ -59,9 +78,9 @@ namespace Player
                 if (Mathf.Abs(_currentTiltAngle) <= MAX_TILT_ERROR) _currentTiltAngle = 0;
             }
             
-            var rotationVector = new Vector3(_playerCamera.eulerAngles.x,
-                _playerCamera.eulerAngles.y, _currentTiltAngle);
-            _playerCamera.localRotation = Quaternion.Euler(rotationVector);
+            var rotationVector = new Vector3(_cameraToTilt.eulerAngles.x,
+                _cameraToTilt.eulerAngles.y, _currentTiltAngle);
+            _cameraToTilt.localRotation = Quaternion.Euler(rotationVector);
         }
 
         private void GetDirection(Vector2 direction)

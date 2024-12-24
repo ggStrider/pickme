@@ -5,6 +5,7 @@ using Dialogue.Observers;
 
 using Handlers;
 using Handlers.Observer;
+using Zenject;
 
 namespace Player
 {
@@ -23,6 +24,29 @@ namespace Player
         private float _rotationX;
         private float _rotationY;
 
+        private InputReader _inputReader;
+        
+        [Inject]
+        private void Construct(InputReader inputReader, DialogueManager dialogueManager,
+            PlayerCameraFocusHandler focusHandler, CamerasHandler camerasHandler)
+        {
+            _inputReader = inputReader;
+            _inputReader.OnMouseLook += SetLookRotation;
+            
+            dialogueManager.SubscribeDialogueStarted(this);
+            dialogueManager.SubscribeDialogueEnded(this);
+            
+            camerasHandler.SubscribeToNewCameraSet(this);
+            camerasHandler.SubscribeToPlayerCameraSet(this);
+            
+            focusHandler.Subscribe(this);
+        }
+
+        private void OnDestroy()
+        {
+            if(_inputReader != null) _inputReader.OnMouseLook -= SetLookRotation;
+        }
+        
         private void Start()
         {
             if (_camera != null) return;
@@ -37,23 +61,11 @@ namespace Player
             
             _camera = Camera.main.transform;
         }
-
-        public void Initialize(DialogueManager dialogueManager, PlayerCameraFocusHandler focusHandler, CamerasHandler camerasHandler)
-        {
-            dialogueManager.SubscribeDialogueStarted(this);
-            dialogueManager.SubscribeDialogueEnded(this);
-            
-            camerasHandler.SubscribeToNewCameraSet(this);
-            camerasHandler.SubscribeToPlayerCameraSet(this);
-            
-            focusHandler.Subscribe(this);
-        }
-
         /// <summary>
-        /// Method to rotate player and camera
+        /// Rotates camera by input
         /// </summary>
         /// <param name="lookRotation">rotate vector</param>
-        public void SetLookRotation(Vector2 lookRotation)
+        private void SetLookRotation(Vector2 lookRotation)
         {
             if (!_canRotate) return;
             var finalRotationVector = lookRotation * _sensitivity;
