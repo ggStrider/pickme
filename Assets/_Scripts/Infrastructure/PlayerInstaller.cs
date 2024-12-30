@@ -4,7 +4,6 @@ using Zenject;
 using Cinemachine;
 using Creature;
 using Handlers;
-using Player;
 using Player.Additional;
 using Player.Main;
 

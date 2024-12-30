@@ -1,12 +1,18 @@
-using System;
-using Creature;
-using Dialogue;
-using Dialogue.Observers;
-using Handlers;
-using Handlers.Observer;
-using Player.Additional;
 using UnityEngine;
 using Zenject;
+
+using System;
+
+using Dialogue.Observers;
+using Dialogue;
+
+using Creature;
+
+using Handlers;
+using Handlers.Observer;
+
+using Player.Additional;
+using _Configs.Player.Movement;
 
 namespace Player.Main
 {
@@ -14,10 +20,10 @@ namespace Player.Main
     public class PlayerMovement : MonoBehaviour, IMovable, IDialogueStarted, IDialogueEnded,
         IPlayerCameraSet, INewCameraSet
     {
-        [SerializeField] private float _maxSpeed = 10f;
-        [SerializeField] private float _addSpeedDelta = 1f;
+        [SerializeField] private PlayerConfig _playerConfig;
         [SerializeField] private float _currentSpeed;
         [SerializeField] private bool _canMove = true;
+        private float _maxSpeed;
 
         [Space]
         [SerializeField] private Transform _playerCamera;
@@ -48,12 +54,19 @@ namespace Player.Main
         private void OnDestroy()
         {
             if(_inputReader != null) _inputReader.OnMove -= SetDirection;
-            if(_sprintSystem != null)_sprintSystem.OnSprintToggled -= OnSprintToggled;
+            if(_sprintSystem != null) _sprintSystem.OnSprintToggled -= OnSprintToggled;
         }
 
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
+
+            if (_playerConfig == null)
+            {
+                throw new NullReferenceException("No player config on PlayerMovement!!!");
+            }
+            
+            ChangePlayerConfig(_playerConfig);
         }
         
         public void SetDirection(Vector2 direction)
@@ -75,9 +88,9 @@ namespace Player.Main
         {
             if (IsPlayerMoving())
             {
-                _currentSpeed = Mathf.Clamp(_currentSpeed + _addSpeedDelta, 0, _maxSpeed);
+                _currentSpeed = Mathf.Clamp(_currentSpeed + _playerConfig.SpeedAcceleration, 0, _maxSpeed);
             }
-            
+
             var cameraForward = _playerCamera.transform.forward;
             cameraForward.y = 0;
             cameraForward.Normalize();
@@ -97,6 +110,12 @@ namespace Player.Main
         {
             if (!_canMove) return false;
             return _direction != Vector2.zero;
+        }
+
+        public void ChangePlayerConfig(PlayerConfig playerConfig)
+        {
+            _playerConfig = playerConfig;
+            _maxSpeed = playerConfig.MaxSpeed;
         }
 
         #region Subscriptions

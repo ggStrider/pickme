@@ -1,3 +1,4 @@
+using System;
 using Interact;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace Hybrid.TakeObject
 
             if (playerItemPlace == null)
             {
-                Debug.LogWarning("Player item place is null!!!");
+                throw new NullReferenceException("PlayerItemPlace cannot be null.");
             }
         }
         
